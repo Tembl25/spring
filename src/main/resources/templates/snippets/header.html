@@ -8,10 +8,14 @@
     <ul class="nav nav-pills">
         <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Главная</a></li>
         <li class="nav-item"><a href="/blog" class="nav-link">Блог</a></li>
-        <li class="nav-item"><a href="/blog/add" class="nav-link">Добавить статью</a></li>
+        <li class="nav-item" th:if="${user != null}"><a href="/blog/add" class="nav-link">Добавить статью</a></li>
         <li class="nav-item"><a href="/about" class="nav-link">О нас</a></li>
-        <li class="nav-item"><a href="/register" class="nav-link">Регистрация</a></li>
-        <li class="nav-item"><a href="/login" class="nav-link">Вход</a></li>
+        <li class="nav-item" th:if="${user == null}"><a href="/registration" class="nav-link">Регистрация</a></li>
+        <li class="nav-item" th:if="${user == null}"><a href="/login" class="nav-link">Вход</a></li>
+        <form action="/logout" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <li class="nav-item" th:if="${user != null}"><button type="submit" class="nav-link">Выход</button></li>
+        </form>
     </ul>
 </header>
 </div>

@@ -19,9 +19,7 @@
                 <p><b>Просмотры:</b> <span th:text="${el.views}"></span></p>
                 <div class="d-flex justify-content-between align-items-center">
                     <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-primary">Редактировать</a>
-                    <form th:action="'/blog/' + ${el.id} + '/delete'" method="post">
-                        <button type="submit" class="btn btn-danger">Удалить</button>
-                    </form>
+                    <a th:href="'/blog/' + ${el.id} + '/delete'" class="btn btn-danger">Удалить</a>
                 </div>
             </div>
         </div>

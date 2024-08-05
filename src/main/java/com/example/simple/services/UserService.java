@@ -1,27 +1,30 @@
 package com.example.simple.services;
 import com.example.simple.models.User;
+import com.example.simple.models.enums.Role;
 import com.example.simple.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    @Lazy
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public User register(User user) {
+    @Transactional
+    public void createUser(User user) {
+        String username = user.getUsername();
+        if(userRepository.findByUsername(username) != null) {
+            throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
+        }
+        user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        user.getRoles().add(Role.ROLE_USER);
+        userRepository.save(user);
     }
 }

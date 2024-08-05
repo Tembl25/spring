@@ -28,6 +28,10 @@ public class Post {
 
     @Column(name = "views")
     private int views;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
     public Post(String title, String anons, String full_text) {
         this.title = title;
         this.anons = anons;

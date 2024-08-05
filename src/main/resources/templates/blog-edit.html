@@ -11,23 +11,23 @@
 
 <div class="container mt-5">
   <h1>Редактирование статьи</h1>
-<div th:each="el : ${post}">
-  <form method="post">
-    <div class="mb-3">
-      <label for="title" class="f orm-label">Заголовок</label>
-      <input type="text" th:value="${el.title}" class="form-control" id="title" name="title">
-    </div>
-    <div class="mb-3">
-      <label for="anons" class="form-label">Анонс</label>
-      <input type="text" th:value="${el.anons}" class="form-control" id="anons" name="anons">
-    </div>
-    <div class="mb-3">
-      <label for="full_text" class="form-label">Полное содержание</label>
-      <textarea class="form-control" id="full_text" name="full_text" th:text="${el.full_text}" rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-  </form>
-</div>
+  <div th:each="el : ${post}">
+    <form method="post" th:action="@{'/blog/' + ${el.id} + '/edit'}">
+      <div class="mb-3">
+        <label for="title" class="form-label">Заголовок</label>
+        <input type="text" th:value="${el.title}" class="form-control" id="title" name="title">
+      </div>
+      <div class="mb-3">
+        <label for="anons" class="form-label">Анонс</label>
+        <input type="text" th:value="${el.anons}" class="form-control" id="anons" name="anons">
+      </div>
+      <div class="mb-3">
+        <label for="full_text" class="form-label">Полное содержание</label>
+        <textarea class="form-control" id="full_text" name="full_text" th:text="${el.full_text}" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+  </div>
 </div>
 
 <footer th:insert="snippets/footer :: footer"></footer>
